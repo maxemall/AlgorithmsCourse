@@ -32,6 +32,11 @@ public class MagicSquare extends JComponent {
     paint.drawMagic();
     //        paint.fill(w - 1, h - 1);
 
+
+    double x = 1.001;
+    for (int i = 1; i <= 1000; i++) {
+      x = x * x;
+    }
   }
 
   public void setMap(int x, int y, int number) {

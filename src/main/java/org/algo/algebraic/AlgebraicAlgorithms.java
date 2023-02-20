@@ -1,5 +1,7 @@
 package org.algo.algebraic;
 
+import java.util.ArrayList;
+
 public class AlgebraicAlgorithms {
 
   public static void main(String[] args) {

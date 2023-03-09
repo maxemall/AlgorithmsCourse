@@ -17,29 +17,39 @@ import java.util.random.RandomGenerator;
 public class Sort {
   private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-
   public static void main(String[] args) throws NoSuchMethodException {
     List<TestResults> testResults = new ArrayList<>();
+    long[] array = new long[] {3, 1, 2, 4, 7, 0, 14, 9, 11, -1};
+//    long[] merge = mergeSort(array);
+//    System.out.println(merge);
     for (int n = 10; n <= 1_000_000; n *= 10) {
 
       long[] randomArray = generateRandomArray(n);
-      long[] selectionSort = compute(randomArray, Sort::selectionSort, testResults, "selectionSort");
-      long[] insertionSort = compute(randomArray, Sort::insertionSort, testResults, "insertionSort");
-      long[] bubbleSort = compute(randomArray, Sort::bubbleSort, testResults, "bubbleSort");
-      long[] bubbleSortOptimized = compute(randomArray, Sort::bubbleSortOptimized, testResults, "bubbleSortOptimized");
-      long[] insertionSortShift = compute(randomArray, Sort::insertionSortShift, testResults, "insertionSortShift");
-      long[] heapSort = compute(randomArray, Sort::heapSort, testResults, "heapSort");
-      long[] shellSort2 = compute(randomArray, 2, Sort::shellSort, testResults, "shellSort2");
-      long[] shellSort25 = compute(randomArray, 25, Sort::shellSort, testResults, "shellSort25");
+      //      long[] selectionSort = compute(randomArray, Sort::selectionSort, testResults,
+      // "selectionSort");
+      //      long[] insertionSort = compute(randomArray, Sort::insertionSort, testResults,
+      // "insertionSort");
+      //      long[] bubbleSort = compute(randomArray, Sort::bubbleSort, testResults, "bubbleSort");
+      //      long[] bubbleSortOptimized = compute(randomArray, Sort::bubbleSortOptimized,
+      // testResults, "bubbleSortOptimized");
+      //      long[] insertionSortShift = compute(randomArray, Sort::insertionSortShift,
+      // testResults, "insertionSortShift");
+      //      long[] heapSort = compute(randomArray, Sort::heapSort, testResults, "heapSort");
+      //      long[] shellSort2 = compute(randomArray, 2, Sort::shellSort, testResults,
+      // "shellSort2");
+      //      long[] shellSort25 = compute(randomArray, 25, Sort::shellSort, testResults,
+      // "shellSort25");
+      long[] quickSort = compute(randomArray, Sort::quickSort, testResults, "quickSort");
+      long[] mergeSort = compute(randomArray, Sort::mergeSort, testResults, "mergeSort");
     }
     System.out.println(testResults);
   }
 
   public static long[] compute(
-          long[] value,
-          Function<long[], long[]> function,
-          List<TestResults> testResults,
-          String methodName) {
+      long[] value,
+      Function<long[], long[]> function,
+      List<TestResults> testResults,
+      String methodName) {
     ExecutorService executor = Executors.newSingleThreadExecutor();
     Future<long[]> future = executor.submit(() -> function.apply(value));
     long start = System.currentTimeMillis();
@@ -68,7 +78,8 @@ public class Sort {
     ExecutorService executor = Executors.newSingleThreadExecutor();
     Future<long[]> future = executor.submit(() -> function.apply(value, gap));
     long start = System.currentTimeMillis();
-    long[] result = new long[0];;
+    long[] result = new long[0];
+    ;
     try {
       result = future.get(2, TimeUnit.MINUTES); // wait for 2 minutes
       long time = System.currentTimeMillis() - start;
@@ -162,6 +173,67 @@ public class Sort {
       heapify(array, 0, j);
     }
     return array;
+  }
+
+  public static long[] mergeSort(long[] array) {
+    mergeSort(array, 0, array.length - 1);
+    return array;
+  }
+
+  private static void mergeSort(long[] array, int left, int right) {
+    if (left >= right) return;
+    int middle = (left + right) / 2;
+    mergeSort(array, left, middle);
+    mergeSort(array, middle + 1, right);
+    merge(array, left, middle, right);
+  }
+
+  private static void merge(long[] array, int left, int middle, int right) {
+    int leftSize = middle - left + 1;
+    int rightSize = right - middle;
+
+    long[] tempArray = new long[right - left + 1];
+    int[] rightTempArray = new int[rightSize];
+
+    int leftCnt = left;
+    int rightCnt = middle + 1;
+    int index = 0;
+
+    while (leftCnt <= middle && rightCnt <= right) {
+      if (array[leftCnt] <= array[rightCnt]) tempArray[index++] = array[leftCnt++];
+      else tempArray[index++] = array[rightCnt++];
+    }
+
+    while (leftCnt <= middle) tempArray[index++] = array[leftCnt++];
+    while (rightCnt <= right) tempArray[index++] = array[rightCnt++];
+
+    index = 0;
+    for (int i = left; i <= right ; i++) {
+      array[i] = tempArray[index++];
+    }
+  }
+
+  public static long[] quickSort(long[] array) {
+    quickSort(array, 0, array.length - 1);
+    return array;
+  }
+
+  private static long[] quickSort(long[] array, int left, int right) {
+    if (left >= right) return array;
+    int middle = split(array, left, right);
+    quickSort(array, left, middle - 1);
+    quickSort(array, middle + 1, right);
+    return array;
+  }
+
+  private static int split(long[] array, int left, int right) {
+    long pivot = array[right];
+    int i = left - 1;
+    for (int j = left; j < right; j++) {
+      if (array[j] < pivot) swap(array, ++i, j);
+    }
+    swap(array, i + 1, right);
+    return i;
   }
 
   private static void heapify(long[] array, int rootIndex, int length) {

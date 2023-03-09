@@ -20,8 +20,6 @@ public class Sort {
   public static void main(String[] args) throws NoSuchMethodException {
     List<TestResults> testResults = new ArrayList<>();
     long[] array = new long[] {3, 1, 2, 4, 7, 0, 14, 9, 11, -1};
-//    long[] merge = mergeSort(array);
-//    System.out.println(merge);
     for (int n = 10; n <= 1_000_000; n *= 10) {
 
       long[] randomArray = generateRandomArray(n);

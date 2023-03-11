@@ -1,6 +1,7 @@
 package org.algo.sorting;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -39,9 +40,12 @@ public class Sort {
             //      long[] quickSort = compute(randomArray, Sort::quickSort, testResults, "quickSort");
             //      long[] mergeSort = compute(randomArray, Sort::mergeSort, testResults, "mergeSort");
             long[] radixSort = compute(randomArray, Sort::radixSort, testResults, "radixSort");
-            long[] bucketSort = compute(randomArray, 10, Sort::bucketSort, testResults, "bucketSort");
+            long[] bucketSort = compute(randomArray, 1000, Sort::bucketSort, testResults, "bucketSort");
             long[] countSort = compute(randomArray, Sort::countSort, testResults, "countSort");
+            System.out.println(Arrays.equals(radixSort, bucketSort));
+            System.out.println(Arrays.equals(countSort, radixSort));
         }
+
         System.out.println(testResults);
     }
 
@@ -95,8 +99,12 @@ public class Sort {
     }
 
     public static long[] generateRandomArray(int size) {
-        RandomGenerator randomGenerator = new Random();
-        return randomGenerator.longs(size).toArray();
+        RandomGenerator randomGenerator = new Random(size);
+        long[] array = new long[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = Math.abs(randomGenerator.nextInt(100_000));
+        }
+        return array;
     }
 
     public static long[] bucketSort(long[] array, int bucketFactor) {

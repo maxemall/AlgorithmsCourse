@@ -67,11 +67,11 @@ public class SearchTree {
     return currentNode;
   }
 
-  public void remove(int key) {
+  public Node remove(int key) {
     Node deleteNode = search(key);
 
     if (deleteNode == null) {
-      return;
+      return null;
     }
 
     boolean isRoot = deleteNode.parentNode == null;
@@ -100,12 +100,11 @@ public class SearchTree {
     if (deleteNode.leftNode == null && deleteNode.rightNode == null) {
       if (isRoot) {
         head = null;
-        return;
+        return deleteNode;
       }
       if (isParentsRight) deleteNode.parentNode.rightNode = null;
       else deleteNode.parentNode.leftNode = null;
-      recalculateHeight(deleteNode.parentNode);
-      return;
+      return deleteNode;
     }
 
     // один дочерний слева
@@ -113,15 +112,14 @@ public class SearchTree {
       if (isRoot) {
         head = deleteNode.leftNode;
         head.parentNode = null;
-        return;
+        return deleteNode;
       }
       if (isParentsRight) {
         deleteNode.parentNode.rightNode = deleteNode.leftNode;
       } else deleteNode.parentNode.leftNode = deleteNode.leftNode;
 
       deleteNode.leftNode.parentNode = deleteNode.parentNode;
-      recalculateHeight(deleteNode.parentNode);
-      return;
+      return deleteNode;
     }
 
     // один дочерний справа
@@ -129,15 +127,15 @@ public class SearchTree {
       if (isRoot) {
         head = deleteNode.rightNode;
         head.parentNode = null;
-        return;
+        return head;
       }
       if (isParentsRight) {
         deleteNode.parentNode.rightNode = deleteNode.rightNode;
       } else deleteNode.parentNode.leftNode = deleteNode.rightNode;
 
       deleteNode.rightNode.parentNode = deleteNode.parentNode;
-      recalculateHeight(deleteNode.parentNode);
     }
+    return deleteNode;
   }
 
   public class Node {

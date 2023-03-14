@@ -38,22 +38,34 @@ public class AVLTree extends SearchTree {
   public Node insert(int key, Object value) {
     Node result = super.insert(key, value);
     recalculateHeight(result);
-    Node node = head;
+    rebalance(key, head);
+
+    return result;
+  }
+
+  private void rebalance(int key, Node node) {
     int balanceFactor = getBalanceFactor(node);
-    if (balanceFactor > 1 && key < node.leftNode.key) return rightRotation(node);
+    if (balanceFactor > 1 && key < (node.leftNode != null ? node.leftNode.key : 0)) rightRotation(node);
 
-    if (balanceFactor < -1 && key > node.rightNode.key) return leftRotation(node);
+    if (balanceFactor < -1 && key > (node.rightNode != null ? node.rightNode.key : 0)) leftRotation(node);
 
-    if (balanceFactor > 1 && key > node.leftNode.key) {
+    if (balanceFactor > 1 && key > (node.leftNode != null ? node.leftNode.key : 0)) {
       node.leftNode = leftRotation(node.leftNode);
-      return rightRotation(node);
+      rightRotation(node);
     }
 
-    if (balanceFactor < -1 && key < node.rightNode.key) {
+    if (balanceFactor < -1 && key < (node.rightNode != null ? node.rightNode.key : 0)) {
       node.rightNode = rightRotation(node.rightNode);
-      return leftRotation(node);
+      leftRotation(node);
     }
+  }
 
+  @Override
+  public Node remove(int key) {
+    Node result = super.remove(key);
+    if (result == null) return null;
+    recalculateHeight(result.parentNode);
+    rebalance(key, head);
     return result;
   }
 

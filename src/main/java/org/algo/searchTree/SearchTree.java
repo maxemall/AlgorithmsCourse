@@ -160,4 +160,19 @@ public class SearchTree {
       this.parentNode = parentNode;
     }
   }
+
+  public void print() {
+    print(this.head, "", true);
+  }
+
+  private void print(Node node, String prefix, boolean isLeft) {
+    if (node != null) {
+      System.out.print(prefix);
+      System.out.print(isLeft ? "├──L " : "└──R ");
+      System.out.println(node.key);
+
+      print(node.leftNode, prefix + (isLeft ? "│   " : "    "), true);
+      print(node.rightNode, prefix + (isLeft ? "│   " : "    "), false);
+    }
+  }
 }

@@ -5,6 +5,8 @@ import java.util.Random;
 import java.util.random.RandomGenerator;
 
 public class Program {
+
+  //тестирование dsds
   public static void main(String[] args) {
     test();
 
@@ -42,25 +44,26 @@ public class Program {
 
   private static void test() {
     SearchTree bst = new AVLTree();
-    int[] rnds = generateRandomArray(10);
+    int[] rnds = generateRandomArray(20);
     for (int rnd : rnds) {
       bst.insert(rnd, rnd);
     }
-
-    System.out.println(Arrays.toString(bst.getSorted()));
-
-    System.out.println(bst.search(rnds[2]).key);
-    System.out.println(bst.search(rnds[5]).key);
-    System.out.println(bst.search(rnds[9]).key);
-
-    bst.remove(rnds[0]);
-    bst.remove(rnds[5]);
-    bst.remove(rnds[9]);
-
-    System.out.println(bst.search(rnds[0]));
-    System.out.println(bst.search(rnds[5]));
-    System.out.println(bst.search(rnds[9]));
-    System.out.println(Arrays.toString(bst.getSorted()));
+    bst.print();
+//
+//    System.out.println(Arrays.toString(bst.getSorted()));
+//
+//    System.out.println(bst.search(rnds[2]).key);
+//    System.out.println(bst.search(rnds[5]).key);
+//    System.out.println(bst.search(rnds[9]).key);
+//
+//    bst.remove(rnds[0]);
+//    bst.remove(rnds[5]);
+//    bst.remove(rnds[9]);
+//
+//    System.out.println(bst.search(rnds[0]));
+//    System.out.println(bst.search(rnds[5]));
+//    System.out.println(bst.search(rnds[9]));
+//    System.out.println(Arrays.toString(bst.getSorted()));
   }
 
   public static int[] generateRandomArray(int size) {

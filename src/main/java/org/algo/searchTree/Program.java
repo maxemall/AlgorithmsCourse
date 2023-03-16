@@ -12,14 +12,20 @@ public class Program {
 
     int[] rnds = generateRandomArray(100_000);
 
-    test2(rnds, "случайном");
+    System.out.println("Дерево поиска");
+    test2(new SearchTree(), rnds, "случайном");
 
     Arrays.sort(rnds);
-    test2(rnds, "возрастающем");
+    test2(new SearchTree(), rnds, "возрастающем");
+
+    System.out.println("Дерево AVL");
+    test2(new AVLTree(), rnds, "случайном");
+
+    Arrays.sort(rnds);
+    test2(new AVLTree(), rnds, "возрастающем");
   }
 
-  private static void test2(int[] rnds, String order) {
-    SearchTree bst = new AVLTree();
+  private static void test2(SearchTree bst, int[] rnds, String order) {
     long start = System.currentTimeMillis();
     for (int rnd : rnds) {
       bst.insert(rnd, rnd);

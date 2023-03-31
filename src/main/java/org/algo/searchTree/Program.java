@@ -2,7 +2,6 @@ package org.algo.searchTree;
 
 import java.util.Arrays;
 import java.util.Random;
-import java.util.random.RandomGenerator;
 
 public class Program {
 
@@ -73,7 +72,7 @@ public class Program {
   }
 
   public static int[] generateRandomArray(int size) {
-    RandomGenerator randomGenerator = new Random(size);
+    Random randomGenerator = new Random(size);
     int[] array = new int[size];
     for (int i = 0; i < size; i++) {
       array[i] = Math.abs(randomGenerator.nextInt(500));

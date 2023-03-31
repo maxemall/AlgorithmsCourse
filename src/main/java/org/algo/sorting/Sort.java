@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.random.RandomGenerator;
 
 public class Sort {
 
@@ -99,7 +98,7 @@ public class Sort {
     }
 
     public static long[] generateRandomArray(int size) {
-        RandomGenerator randomGenerator = new Random(size);
+        Random randomGenerator = new Random(size);
         long[] array = new long[size];
         for (int i = 0; i < size; i++) {
             array[i] = Math.abs(randomGenerator.nextInt(100_000));

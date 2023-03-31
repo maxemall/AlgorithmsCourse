@@ -71,10 +71,11 @@ public class PowerAlgorithms {
     if (degree == 0) {
       return result;
     }
+    boolean isNegative = false;
 
     if (degree < 0) {
-      throw new UnsupportedOperationException(
-          "Возведение в отрицательную степень не поддерживается");
+      isNegative = true;
+      degree = degree * -1;
     }
 
     if (degree % 2 == 1) {
@@ -86,6 +87,8 @@ public class PowerAlgorithms {
       number = number * number;
       if (degree % 2 == 1) result = result * number;
     }
+
+    if (isNegative) result = 1d / result;
 
     return result;
   }

@@ -1,7 +1,7 @@
 package org.algo.hash;
 
 import org.algo.searchTree.SearchTree;
-import static org.algo.searchTree.Program.generateRandomArray;
+import java.util.Arrays;import static org.algo.searchTree.Program.generateRandomArray;
 
 public class Programm {
   public static void main(String[] args) {
@@ -19,6 +19,10 @@ public class Programm {
 
     int[] rnds = generateRandomArray(1000_000);
     test2(new HashTable(11), rnds, "Произвольный");
+
+    Arrays.sort(rnds);
+    test2(new HashTable(11), rnds, "Отсортированный");
+
   }
 
   private static void test2(HashTable hashTable, int[] rnds, String order) {

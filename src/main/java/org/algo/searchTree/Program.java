@@ -7,6 +7,9 @@ public class Program {
 
   //тестирование dsds
   public static void main(String[] args) {
+
+    Node node = new Node(1, 1, null);
+
     test();
 
     int[] rnds = generateRandomArray(100_000);

@@ -28,6 +28,7 @@ public class SearchTree {
     return array;
   }
 
+
   public Node insert(int key, Object value) {
     Node currentNode = head;
     Node parentNode = null;
@@ -53,6 +54,7 @@ public class SearchTree {
     currentNode = new Node(key, value, parentNode);
     if (rightNode) parentNode.rightNode = currentNode;
     else parentNode.leftNode = currentNode;
+    recalculateHeight(currentNode);
     return currentNode;
   }
 
@@ -136,29 +138,6 @@ public class SearchTree {
       deleteNode.rightNode.parentNode = deleteNode.parentNode;
     }
     return deleteNode;
-  }
-
-  public class Node {
-    int key;
-    Object value;
-    Node leftNode;
-    Node rightNode;
-    int height;
-    Node parentNode;
-
-    public Node(int key, Object value, Node leftNode, Node rightNode, int height) {
-      this.key = key;
-      this.value = value;
-      this.leftNode = leftNode;
-      this.rightNode = rightNode;
-      this.height = height;
-    }
-
-    public Node(int key, Object value, Node parentNode) {
-      this.key = key;
-      this.value = value;
-      this.parentNode = parentNode;
-    }
   }
 
   public void print() {

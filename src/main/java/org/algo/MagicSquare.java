@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
+//Отрисовка по формулам
 public class MagicSquare extends JComponent {
 
   private int[][] map;
